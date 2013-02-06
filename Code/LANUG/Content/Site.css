@@ -106,8 +106,7 @@ ul#Menu li a
 #admin-nav
 {
     padding:5px;
-    background-color:#e0e7dc;
-    border: 1px solid #6a7c5d;
+    background-color:#57654d;
 }
 #admin-nav ul li
 {
@@ -119,7 +118,7 @@ ul#Menu li a
 }
 #admin-nav li a
 {
-    color: #879978;
+    color: #fff;
     text-decoration: none;
 }
 

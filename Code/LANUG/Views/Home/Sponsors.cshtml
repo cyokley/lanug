@@ -10,7 +10,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <a href="@item.Website"><img class="sponsor-logo" src="@Url.Content(item.LogoURL)" alt="@item.Name" /></a>
+            <a href="@item.Website" target="_blank" ><img class="sponsor-logo" src="@Url.Content(item.LogoURL)" alt="@item.Name" /></a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)

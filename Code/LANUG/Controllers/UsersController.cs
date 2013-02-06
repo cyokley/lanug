@@ -61,7 +61,10 @@ namespace LANUG.Controllers
                 u.Email = model.Email;
                 db.SaveChanges();
 
-                if (!string.IsNullOrEmpty(IsAdmin)) Roles.AddUserToRole(u.UserName, "Admin");
+                if (!string.IsNullOrEmpty(IsAdmin))
+                {
+                    if(!Roles.IsUserInRole(u.UserName, "Admin")) Roles.AddUserToRole(u.UserName, "Admin");
+                }
                 else Roles.RemoveUserFromRole(u.UserName, "Admin");
 
                 return RedirectToAction("Index");
