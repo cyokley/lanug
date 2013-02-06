@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Objects.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,7 +32,7 @@ namespace LANUG.Controllers
         [AllowAnonymous]
         public ActionResult GetItem(string name)
         {
-            return View(db.Meetings.Where(m => m.Name == name).Include(m => m.Sponsors).FirstOrDefault());
+            return View(db.Meetings.Where(m => SqlFunctions.PatIndex(name.Replace("-", "_"), m.Name) > 0).Include(m => m.Sponsors).FirstOrDefault());
         }
 
         //
