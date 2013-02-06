@@ -1,0 +1,46 @@
+﻿@model LANUG.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+<section id="loginForm">
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="left">
+        <table class="info-table">
+            <tr>
+                <td>
+                @Html.LabelFor(m => m.UserName)</td>
+                <td>
+                @Html.TextBoxFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)</td>
+            </tr>
+            <tr>
+                <td>
+                @Html.LabelFor(m => m.Password)</td>
+                <td>
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })</td>
+            </tr>
+        </table>
+        <input type="submit" value="Log in" />
+    </fieldset>
+}
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

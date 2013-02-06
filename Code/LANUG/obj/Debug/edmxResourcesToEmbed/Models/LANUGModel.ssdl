@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LANUGModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="LANUGModelStoreContainer">
+    <EntitySet Name="Meetings" EntityType="LANUGModel.Store.Meetings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeetingSponsors" EntityType="LANUGModel.Store.MeetingSponsors" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sponsors" EntityType="LANUGModel.Store.Sponsors" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_MeetingSponsors_Meetings" Association="LANUGModel.Store.FK_MeetingSponsors_Meetings">
+      <End Role="Meetings" EntitySet="Meetings" />
+      <End Role="MeetingSponsors" EntitySet="MeetingSponsors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MeetingSponsors_Sponsors" Association="LANUGModel.Store.FK_MeetingSponsors_Sponsors">
+      <End Role="Sponsors" EntitySet="Sponsors" />
+      <End Role="MeetingSponsors" EntitySet="MeetingSponsors" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Meetings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="Info" Type="ntext" Nullable="false" />
+    <Property Name="Summary" Type="ntext" Nullable="false" />
+    <Property Name="Created" Type="datetime" Nullable="false" />
+    <Property Name="CreatedById" Type="int" Nullable="false" />
+    <Property Name="Modified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedById" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MeetingSponsors">
+    <Key>
+      <PropertyRef Name="MeetingId" />
+      <PropertyRef Name="SponsorId" />
+    </Key>
+    <Property Name="MeetingId" Type="int" Nullable="false" />
+    <Property Name="SponsorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sponsors">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Website" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="1000" />
+    <Property Name="LogoURL" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Created" Type="datetime" Nullable="false" />
+    <Property Name="CreatedById" Type="int" Nullable="false" />
+    <Property Name="Modified" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedById" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_MeetingSponsors_Meetings">
+    <End Role="Meetings" Type="LANUGModel.Store.Meetings" Multiplicity="1" />
+    <End Role="MeetingSponsors" Type="LANUGModel.Store.MeetingSponsors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Meetings">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MeetingSponsors">
+        <PropertyRef Name="MeetingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MeetingSponsors_Sponsors">
+    <End Role="Sponsors" Type="LANUGModel.Store.Sponsors" Multiplicity="1" />
+    <End Role="MeetingSponsors" Type="LANUGModel.Store.MeetingSponsors" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sponsors">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MeetingSponsors">
+        <PropertyRef Name="SponsorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

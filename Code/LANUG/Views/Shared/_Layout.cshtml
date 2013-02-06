@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Lower Alabama .Net User Group</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <header>
+        <div id="TopBar">
+            <nav>
+                <ul id="Menu">
+                    <li><a href="@Url.Content("~/")">Home</a></li>
+                    <li><a href="@Url.Content("~/About")">About</a></li>
+                    <li><a href="@Url.Content("~/Sponsors")">Sponsors</a></li>
+                    <li><a href="@Url.Content("~/Contact")">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="float-right inline">
+                <section id="TopConnectIcons" class="icons">
+                    @Html.Partial("_ConnectIconsPartial")
+                </section>
+            </div>
+        </div>
+    </header>
+    <div id="BodyWrapper">
+        <div id="SideBar">
+            <div id="LogoArea">
+                <img id="MainLogo" src="@Url.Content("~/Images/logo.png")"/>
+            </div>
+            <div id="SideContent">
+                @Html.Partial("_SideContentPartial", new LANUG.Models.LANUGEntities().Meetings.Where(m => m.StartTime > DateTime.Now).OrderBy(m => m.StartTime))
+            </div>
+        </div>
+        <div id="Body">
+            @if (Request.IsAuthenticated)
+            {
+                <div id="admin-nav">
+                    <ul>
+                        <li><a href="@Url.Content("~/Admin/Meetings")">Meetings</a></li>
+                        <li><a href="@Url.Content("~/Admin/Sponsors")">Sponsors</a></li>
+                        <li><a href="@Url.Content("~/Admin/Account/Manage")">Account</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                        <li><a href="@Url.Content("~/Admin/Users")">Users</a></li>
+                        }
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    </ul>
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    }
+                </div>
+            }
+            @RenderSection("featured", required: false)
+            <div id="Content">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <footer class="clear-fix">
+        <div class="one-third">
+            <div id="FooterConnectArea">
+                <span class="main-text">connect</span>
+                <section id="FooterConnectIcons" class="icons">@Html.Partial("_ConnectIconsPartial")</section>
+            </div>
+        </div>
+        <div class="one-third">
+            <img src="@Url.Content("~/Images/lanug.png")"/><br />
+            <span class="small-dark-text"><a href="http://yokleydesigns.com" target="_blank">site by yokley designs</a></span>
+        </div>
+        <div class="one-third">
+            <div id="FooterSubscribeArea" style="display: none;">
+                <input id="txtEmail" type="text" />
+                <span class="main-text">subscribe</span>
+            </div>
+        </div>
+    </footer>
+    <a href="https://plus.google.com/105681478003197232414" rel="publisher">Google+</a>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(window).load(function () {
+            // Set body and side columns to the same height.
+            if ($('#Body').height() < $('#SideBar').height()) $('#Body').height($('#SideBar').height());
+        });
+    </script>
+</body>
+</html>

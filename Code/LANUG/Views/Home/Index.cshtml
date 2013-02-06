@@ -1,0 +1,29 @@
+﻿@model LANUG.Models.Meeting
+@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            @if (Model != null)
+            {
+                <h1><a href="Meetings/@Model.Name">@Model.Name</a></h1>
+                @Html.Raw(Model.Summary)
+                <a class="featured-more" href="Meetings/@Model.Name">read more...</a>
+            }
+        </div>
+    </section>
+}
+<h3>Welcome</h3>
+<div>
+    <p>
+        Thanks for visiting the Lower Alabama .Net User Group (LANUG) website. The LANUG is made up of developers from the Gulf Coast Region who share a desire to grow as 
+        individuals and a community. The group is made up of everyone from college students just getting started, to experts with many years of experiance. Everyone is 
+        welcome.
+    </p>
+    <p>
+        The goal of the group is to provide a forum for increasing knowledge about Microsoft .Net and related technologies by offering informative programs while promoting 
+        networking among local developers to build an active developer community.
+    </p>
+    <p>If you are new to the group then join us at our next meeting to find out what's going on and get involved in the community. We hope to see you soon.</p>
+</div>

@@ -1,0 +1,45 @@
+﻿@model LANUG.Models.Meeting
+
+@{
+    ViewBag.Title = "Meeting Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        function ToggleLocationDetails() {
+            $('#LocationDetails').toggle('fast');
+        }
+    </script>
+}
+
+<h2>@Model.Name</h2>
+<div id="MeetingInfo">
+    <div>
+        @if (Model.StartTime.Date.Equals(Model.EndTime.Date))
+        {
+            <span class="field-value">@Model.StartTime.ToShortDateString() &#64; @Model.StartTime.ToShortTimeString().ToLower() - @Model.EndTime.ToShortTimeString().ToLower()</span>
+        }
+        else
+        {
+            <span class="field-value">@Model.StartTime.ToShortDateString() @Model.StartTime.ToShortTimeString().ToLower() - @Model.EndTime.ToShortDateString() @Model.EndTime.ToShortTimeString().ToLower())</span>
+        }
+
+    </div>
+
+    @Html.Raw(Model.Info)
+    <div class="clear"></div>
+
+    @if (Model.Sponsors.Count > 0)
+    { 
+        <div class="sponsor">
+            <div class="thanks">thanks to our sponsor@(Model.Sponsors.Count > 1 ? "s" : string.Empty)</div>
+            @foreach (var s in Model.Sponsors)
+            {
+            <a href="@s.Website"><img class="sponsor-logo" src="@Url.Content(s.LogoURL)" alt="@s.Name" /></a>
+            }
+        </div>
+    }
+    <div class="clear"></div>
+</div>

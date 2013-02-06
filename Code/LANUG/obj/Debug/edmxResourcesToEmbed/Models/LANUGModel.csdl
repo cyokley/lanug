@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LANUGModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="LANUGEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Meetings" EntityType="LANUGModel.Meeting" />
+    <EntitySet Name="Sponsors" EntityType="LANUGModel.Sponsor" />
+    <AssociationSet Name="MeetingSponsors" Association="LANUGModel.MeetingSponsors">
+      <End Role="Meetings" EntitySet="Meetings" />
+      <End Role="Sponsors" EntitySet="Sponsors" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Meeting">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Info" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Summary" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedById" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Sponsors" Relationship="LANUGModel.MeetingSponsors" FromRole="Meetings" ToRole="Sponsors" />
+  </EntityType>
+  <EntityType Name="Sponsor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Website" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="LogoURL" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedById" Type="Int32" Nullable="false" />
+    <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedById" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Meetings" Relationship="LANUGModel.MeetingSponsors" FromRole="Sponsors" ToRole="Meetings" />
+  </EntityType>
+  <Association Name="MeetingSponsors">
+    <End Role="Meetings" Type="LANUGModel.Meeting" Multiplicity="*" />
+    <End Role="Sponsors" Type="LANUGModel.Sponsor" Multiplicity="*" />
+  </Association>
+</Schema>

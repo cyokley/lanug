@@ -1,0 +1,26 @@
+﻿@model IEnumerable<LANUG.Models.Meeting>
+
+<div id="UpcomingMeetings" class="side-content">
+    <h5>Upcoming Meetings</h5>
+
+    <ul>
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {            
+            <li><a href="@Url.Content("~/Meetings/" + item.Name)">@item.Name - @item.StartTime.ToShortDateString()</a></li>
+            }
+        }
+        else
+        {
+            <li>Nothing on the calendar right now. We typically meet on the third Thursday of each month. Check back soon for details.</li>
+        }
+    </ul>
+</div>
+<div id="QuickLinks" class="side-content">
+    <h5>Quick Links</h5>
+    <ul>
+        <li><a href="http://www.microsoft.com/en-us/itacademy/default.aspx">Microsoft Academy</a></li>
+        <li><a href="@Url.Content("~/Sponsors")">Sponsors</a></li>
+    </ul>
+</div>
