@@ -88,4 +88,12 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="@Url.Content("~/Content/ckeditor/ckeditor.js")"></script>
+    <script type="text/javascript">
+        $("select[multiple] option").mousedown(function () {
+            if ($(this).prop("selected")) $(this).prop("selected", "");
+            else $(this).prop("selected", "selected");
+
+            return false;
+        });
+    </script>
 }

@@ -66,9 +66,12 @@ namespace LANUG.Controllers
             if (ModelState.IsValid)
             {
                 meeting.CreatedById = meeting.ModifiedById = new UsersContext().UserProfiles.First(u => u.UserName == User.Identity.Name).UserId;
-                foreach (int sponsorId in SponsorList)
+                if (SponsorList != null)
                 {
-                    meeting.Sponsors.Add(db.Sponsors.Find(sponsorId));
+                    foreach (int sponsorId in SponsorList)
+                    {
+                        meeting.Sponsors.Add(db.Sponsors.Find(sponsorId));
+                    }
                 }
                 db.Meetings.Add(meeting);
                 db.SaveChanges();
@@ -110,9 +113,12 @@ namespace LANUG.Controllers
                 mtg.Info = meeting.Info;
                 mtg.Summary = meeting.Summary;
                 mtg.Sponsors.Clear();
-                foreach (int sponsorId in SponsorList)
+                if (SponsorList != null)
                 {
-                    mtg.Sponsors.Add(db.Sponsors.Find(sponsorId));
+                    foreach (int sponsorId in SponsorList)
+                    {
+                        mtg.Sponsors.Add(db.Sponsors.Find(sponsorId));
+                    }
                 }
 
                 db.SaveChanges();
