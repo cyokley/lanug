@@ -45,7 +45,7 @@
                         <li><a href="@Url.Content("~/Admin/Account/Manage")">Account</a></li>
                         @if (User.IsInRole("Admin"))
                         {
-                        <li><a href="@Url.Content("~/Admin/Users")">Users</a></li>
+                            <li><a href="@Url.Content("~/Admin/Users")">Users</a></li>
                         }
                         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                     </ul>
@@ -80,7 +80,9 @@
             </div>
         </div>
     </footer>
-    <a href="https://plus.google.com/105681478003197232414" rel="publisher">Google+</a>
+    <div style="display: none;">
+        <a href="https://plus.google.com/105681478003197232414" rel="publisher">Google+</a>
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
