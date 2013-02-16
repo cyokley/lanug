@@ -25,7 +25,8 @@ namespace LANUG.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventType> EventTypes { get; set; }
         public DbSet<Sponsor> Sponsors { get; set; }
     }
 }

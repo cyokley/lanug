@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title - Lower Alabama .Net User Group</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @RenderSection("styles", required: false)
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -32,7 +33,7 @@
                 <img id="MainLogo" src="@Url.Content("~/Images/logo.png")"/>
             </div>
             <div id="SideContent">
-                @Html.Partial("_SideContentPartial", new LANUG.Models.LANUGEntities().Meetings.Where(m => m.StartTime > DateTime.Now).OrderBy(m => m.StartTime))
+                    @Html.Partial("_SideContentPartial", new LANUG.Models.LANUGEntities().Events.Where(m => m.EndTime > DateTime.Now).OrderBy(m => m.StartTime))
             </div>
         </div>
         <div id="Body">
@@ -40,7 +41,7 @@
             {
                 <div id="admin-nav">
                     <ul>
-                        <li><a href="@Url.Content("~/Admin/Meetings")">Meetings</a></li>
+                        <li><a href="@Url.Content("~/Admin/Events")">Events</a></li>
                         <li><a href="@Url.Content("~/Admin/Sponsors")">Sponsors</a></li>
                         <li><a href="@Url.Content("~/Admin/Account/Manage")">Account</a></li>
                         @if (User.IsInRole("Admin"))
@@ -74,9 +75,8 @@
             <span class="small-dark-text"><a href="http://yokleydesigns.com" target="_blank">site by yokley designs</a></span>
         </div>
         <div class="one-third">
-            <div id="FooterSubscribeArea" style="display: none;">
-                <input id="txtEmail" type="text" />
-                <span class="main-text">subscribe</span>
+            <div id="FooterSubscribeArea">
+                    <input type="text" id="LANUGSubscribeEmailAddress" name="LANUGSubscribeEmailAddress"/> <span class="main-text"><a href="javascript:SubmitSubscribe();">subscribe</a></span>
             </div>
         </div>
     </footer>
@@ -92,6 +92,33 @@
             // Set body and side columns to the same height.
             if ($('#Body').height() < $('#SideBar').height()) $('#Body').height($('#SideBar').height());
         });
+
+        function SubmitSubscribe() {
+            //alert($('#LANUGSubscribeEmailAddress').val()); return;
+            $.post("http://www.freelists.org/cgi-bin/subscription.cgi", {
+                email: $('#LANUGSubscribeEmailAddress').val(),
+                list: 'lanug',
+                url_or_message: 'Thanks for subscribing. Weve added you to the email list and will notify you of upcoming events and important news.',
+                action: 'subscribe'
+            })
+                .always(function () {
+                    $('#LANUGSubscribeEmailAddress').val('');
+                    alert('Thanks for subscribing. You should recieve an email in the next few minutes with instructions on how to verify your subscription. If you don\'t recieve your confirmation email then please visit http://www.freelists.org/list/lanug to subscribe.');
+                });
+        }
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-38331433-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
     </script>
 </body>
 </html>

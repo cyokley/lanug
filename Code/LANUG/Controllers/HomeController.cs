@@ -13,7 +13,7 @@ namespace LANUG.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Meetings.Where(m => m.StartTime > DateTime.Now).OrderBy(m => m.StartTime).FirstOrDefault());
+            return View(db.Events.Where(e => e.StartTime > DateTime.Now).OrderBy(e => e.StartTime).FirstOrDefault());
         }
 
         public ActionResult About()
@@ -30,6 +30,11 @@ namespace LANUG.Controllers
         {
             LANUGEntities db = new LANUGEntities();
             return View(db.Sponsors.OrderBy(s => s.Name).ToList());
+        }
+
+        public ActionResult Calendar()
+        {
+            return View();
         }
     }
 }

@@ -224,6 +224,11 @@ footer
         font-size:22px;
         letter-spacing:2px;
     }
+    footer .main-text a
+    {
+        color: #9eae92;
+        text-decoration:none;
+    }
     footer #FooterConnectIcons
     {
         display:inline;
@@ -259,9 +264,9 @@ footer
         padding-top:20px;
     }
 
-/* meeting page */
+/* Event page */
 
-#MeetingInfo
+#EventInfo
 {
     color:#808080;
     font-weight:normal;

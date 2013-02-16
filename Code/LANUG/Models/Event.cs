@@ -12,14 +12,15 @@ namespace LANUG.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Meeting
+    public partial class Event
     {
-        public Meeting()
+        public Event()
         {
             this.Sponsors = new HashSet<Sponsor>();
         }
     
         public int Id { get; set; }
+        public int EventTypeId { get; set; }
         public string Name { get; set; }
         public System.DateTime StartTime { get; set; }
         public System.DateTime EndTime { get; set; }
@@ -30,6 +31,7 @@ namespace LANUG.Models
         public System.DateTime Modified { get; set; }
         public int ModifiedById { get; set; }
     
+        public virtual EventType EventType { get; set; }
         public virtual ICollection<Sponsor> Sponsors { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿@model LANUG.Models.Meeting
+﻿@model LANUG.Models.Event
 
 @{
-    ViewBag.Title = "Meeting Details";
+    ViewBag.Title = "Event Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,7 +15,7 @@
 }
 
 <h2>@Model.Name</h2>
-<div id="MeetingInfo">
+<div id="EventInfo">
     <div>
         @if (Model.StartTime.Date.Equals(Model.EndTime.Date))
         {

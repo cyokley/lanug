@@ -1,4 +1,4 @@
-﻿@model LANUG.Models.Meeting
+﻿@model LANUG.Models.Event
 
 @{
     ViewBag.Title = "Edit";
@@ -11,7 +11,7 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Meeting</legend>
+        <legend>Event</legend>
 
         @Html.HiddenFor(model => model.Id)
 
@@ -44,7 +44,7 @@
         </div>
         <div class="editor-field">
             <select id="SponsorList" name="SponsorList" multiple="multiple">
-                @foreach (SelectListItem itm in ViewBag.MeetingSponsors)
+                @foreach (SelectListItem itm in ViewBag.EventSponsors)
                 {
                     <option value="@itm.Value" @(Model.Sponsors.Any(s => s.Id.ToString() == itm.Value) ? " selected='selected' " : string.Empty ) >@itm.Text</option>
                 }

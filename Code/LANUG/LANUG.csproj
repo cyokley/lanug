@@ -164,9 +164,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MeetingsController.cs" />
     <Compile Include="Controllers\SponsorsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -174,6 +174,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Event.cs">
+      <DependentUpon>LANUGModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EventType.cs">
+      <DependentUpon>LANUGModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ITimestampable.cs" />
     <Compile Include="Models\LANUGEntitiesPartial.cs" />
     <Compile Include="Models\LANUGModel.Context.cs">
@@ -191,10 +197,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LANUGModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Meeting.cs">
-      <DependentUpon>LANUGModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MeetingPartial.cs" />
+    <Compile Include="Models\EventPartial.cs" />
     <Compile Include="Models\Sponsor.cs">
       <DependentUpon>LANUGModel.tt</DependentUpon>
     </Compile>
@@ -1087,6 +1090,11 @@
     <Content Include="Content\ckeditor\_source\skins\v2\templates.css" />
     <Content Include="Content\ckeditor\_source\skins\v2\toolbar.css" />
     <Content Include="Content\ckeditor\_source\themes\default\theme.js" />
+    <Content Include="Content\fullcalendar\fullcalendar.css" />
+    <Content Include="Content\fullcalendar\fullcalendar.js" />
+    <Content Include="Content\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Content\fullcalendar\fullcalendar.print.css" />
+    <Content Include="Content\fullcalendar\gcal.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -1142,7 +1150,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
-    <Content Include="Connection.config" />
+    <Content Include="Connection.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Images\email.png" />
     <Content Include="Images\facebook.png" />
     <Content Include="Images\google.png" />
@@ -1166,11 +1176,11 @@
     <Content Include="Content\ckeditor\_samples\php\replaceall.php" />
     <Content Include="Content\ckeditor\_samples\php\standalone.php" />
     <Content Include="Content\ckeditor\_samples\sample_posteddata.php" />
+    <Content Include="favicon.ico" />
     <EntityDeploy Include="Models\LANUGModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LANUGModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="favicon.ico" />
     <Content Include="Models\LANUGModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LANUGModel.edmx</DependentUpon>
@@ -1199,7 +1209,9 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1232,17 +1244,18 @@
     <Content Include="Views\Sponsors\Create.cshtml" />
     <Content Include="Views\Sponsors\Edit.cshtml" />
     <Content Include="Views\Sponsors\Delete.cshtml" />
-    <Content Include="Views\Meetings\Index.cshtml" />
-    <Content Include="Views\Meetings\Details.cshtml" />
-    <Content Include="Views\Meetings\Create.cshtml" />
-    <Content Include="Views\Meetings\Edit.cshtml" />
-    <Content Include="Views\Meetings\Delete.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
     <Content Include="Views\Home\Sponsors.cshtml" />
-    <Content Include="Views\Meetings\GetItem.cshtml" />
+    <Content Include="Views\Events\GetItem.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Disable.cshtml" />
+    <Content Include="Views\Home\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

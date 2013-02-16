@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="LANUGModelStoreContainer" CdmEntityContainer="LANUGEntities">
-    <EntitySetMapping Name="Meetings">
-      <EntityTypeMapping TypeName="LANUGModel.Meeting">
-        <MappingFragment StoreEntitySet="Meetings">
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="LANUGModel.Event">
+        <MappingFragment StoreEntitySet="Events">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
           <ScalarProperty Name="EndTime" ColumnName="EndTime" />
@@ -14,6 +15,14 @@
           <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
           <ScalarProperty Name="Modified" ColumnName="Modified" />
           <ScalarProperty Name="ModifiedById" ColumnName="ModifiedById" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EventTypes">
+      <EntityTypeMapping TypeName="LANUGModel.EventType">
+        <MappingFragment StoreEntitySet="EventTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -32,9 +41,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="MeetingSponsors" TypeName="LANUGModel.MeetingSponsors" StoreEntitySet="MeetingSponsors">
-      <EndProperty Name="Meetings">
-        <ScalarProperty Name="Id" ColumnName="MeetingId" />
+    <AssociationSetMapping Name="EventSponsors" TypeName="LANUGModel.EventSponsors" StoreEntitySet="EventSponsors">
+      <EndProperty Name="Events">
+        <ScalarProperty Name="Id" ColumnName="EventId" />
       </EndProperty>
       <EndProperty Name="Sponsors">
         <ScalarProperty Name="Id" ColumnName="SponsorId" />

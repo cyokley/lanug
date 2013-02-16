@@ -1,4 +1,4 @@
-﻿@model LANUG.Models.Meeting
+﻿@model LANUG.Models.Event
 
 @{
     ViewBag.Title = "Create";
@@ -10,7 +10,7 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Meeting</legend>
+        <legend>Event</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
@@ -41,7 +41,7 @@
         </div>
         <div class="editor-field">
             <select id="SponsorList" name="SponsorList" multiple="multiple">
-                @foreach (SelectListItem itm in ViewBag.MeetingSponsors)
+                @foreach (SelectListItem itm in ViewBag.EventSponsors)
                 {
                     <option value="@itm.Value">@itm.Text</option>
                 }

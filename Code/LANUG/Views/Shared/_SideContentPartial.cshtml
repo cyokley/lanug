@@ -1,14 +1,14 @@
-﻿@model IEnumerable<LANUG.Models.Meeting>
+﻿@model IEnumerable<LANUG.Models.Event>
 
-<div id="UpcomingMeetings" class="side-content">
-    <h5>Upcoming Meetings</h5>
+<div id="UpcomingEvents" class="side-content">
+    <h5>Upcoming Events</h5>
 
     <ul>
         @if (Model.Count() > 0)
         {
             foreach (var item in Model)
             {            
-            <li><a href="@Url.Content("~/Meetings/" + item.Name.Replace(" ", "-"))">@item.Name - @item.StartTime.ToShortDateString()</a></li>
+            <li><a href="@Url.Content("~/Events/" + item.Name.Replace(" ", "-"))">@item.Name - @item.StartTime.ToShortDateString()</a></li>
             }
         }
         else

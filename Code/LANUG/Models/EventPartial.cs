@@ -5,7 +5,7 @@ using System.Web;
 
 namespace LANUG.Models
 {
-    public partial class Meeting : ITimestampable
+    public partial class Event : ITimestampable
     {
         void ITimestampable.SetCreatedTimestamp(DateTime dtm)
         {

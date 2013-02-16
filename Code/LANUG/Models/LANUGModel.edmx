@@ -6,23 +6,29 @@
     <edmx:StorageModels>
       <Schema Namespace="LANUGModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="LANUGModelStoreContainer">
-          <EntitySet Name="Meetings" EntityType="LANUGModel.Store.Meetings" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="MeetingSponsors" EntityType="LANUGModel.Store.MeetingSponsors" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Events" EntityType="LANUGModel.Store.Events" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EventSponsors" EntityType="LANUGModel.Store.EventSponsors" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EventTypes" EntityType="LANUGModel.Store.EventTypes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Sponsors" EntityType="LANUGModel.Store.Sponsors" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Events_EventTypes" Association="LANUGModel.Store.FK_Events_EventTypes">
+            <End Role="EventTypes" EntitySet="EventTypes" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
           <AssociationSet Name="FK_MeetingSponsors_Meetings" Association="LANUGModel.Store.FK_MeetingSponsors_Meetings">
-            <End Role="Meetings" EntitySet="Meetings" />
-            <End Role="MeetingSponsors" EntitySet="MeetingSponsors" />
+            <End Role="Events" EntitySet="Events" />
+            <End Role="EventSponsors" EntitySet="EventSponsors" />
           </AssociationSet>
           <AssociationSet Name="FK_MeetingSponsors_Sponsors" Association="LANUGModel.Store.FK_MeetingSponsors_Sponsors">
             <End Role="Sponsors" EntitySet="Sponsors" />
-            <End Role="MeetingSponsors" EntitySet="MeetingSponsors" />
+            <End Role="EventSponsors" EntitySet="EventSponsors" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Meetings">
+        <EntityType Name="Events">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EventTypeId" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="StartTime" Type="datetime" Nullable="false" />
           <Property Name="EndTime" Type="datetime" Nullable="false" />
@@ -33,13 +39,20 @@
           <Property Name="Modified" Type="datetime" Nullable="false" />
           <Property Name="ModifiedById" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="MeetingSponsors">
+        <EntityType Name="EventSponsors">
           <Key>
-            <PropertyRef Name="MeetingId" />
+            <PropertyRef Name="EventId" />
             <PropertyRef Name="SponsorId" />
           </Key>
-          <Property Name="MeetingId" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
           <Property Name="SponsorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="Sponsors">
           <Key>
@@ -55,26 +68,38 @@
           <Property Name="Modified" Type="datetime" Nullable="false" />
           <Property Name="ModifiedById" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_MeetingSponsors_Meetings">
-          <End Role="Meetings" Type="LANUGModel.Store.Meetings" Multiplicity="1" />
-          <End Role="MeetingSponsors" Type="LANUGModel.Store.MeetingSponsors" Multiplicity="*" />
+        <Association Name="FK_Events_EventTypes">
+          <End Role="EventTypes" Type="LANUGModel.Store.EventTypes" Multiplicity="1" />
+          <End Role="Events" Type="LANUGModel.Store.Events" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Meetings">
+            <Principal Role="EventTypes">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="MeetingSponsors">
-              <PropertyRef Name="MeetingId" />
+            <Dependent Role="Events">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingSponsors_Meetings">
+          <End Role="Events" Type="LANUGModel.Store.Events" Multiplicity="1" />
+          <End Role="EventSponsors" Type="LANUGModel.Store.EventSponsors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventSponsors">
+              <PropertyRef Name="EventId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MeetingSponsors_Sponsors">
           <End Role="Sponsors" Type="LANUGModel.Store.Sponsors" Multiplicity="1" />
-          <End Role="MeetingSponsors" Type="LANUGModel.Store.MeetingSponsors" Multiplicity="*" />
+          <End Role="EventSponsors" Type="LANUGModel.Store.EventSponsors" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sponsors">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="MeetingSponsors">
+            <Dependent Role="EventSponsors">
               <PropertyRef Name="SponsorId" />
             </Dependent>
           </ReferentialConstraint>
@@ -85,18 +110,24 @@
     <edmx:ConceptualModels>
       <Schema Namespace="LANUGModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="LANUGEntities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Meetings" EntityType="LANUGModel.Meeting" />
+          <EntitySet Name="Events" EntityType="LANUGModel.Event" />
+          <EntitySet Name="EventTypes" EntityType="LANUGModel.EventType" />
           <EntitySet Name="Sponsors" EntityType="LANUGModel.Sponsor" />
-          <AssociationSet Name="MeetingSponsors" Association="LANUGModel.MeetingSponsors">
-            <End Role="Meetings" EntitySet="Meetings" />
+          <AssociationSet Name="FK_Events_EventTypes" Association="LANUGModel.FK_Events_EventTypes">
+            <End Role="EventTypes" EntitySet="EventTypes" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="EventSponsors" Association="LANUGModel.EventSponsors">
+            <End Role="Events" EntitySet="Events" />
             <End Role="Sponsors" EntitySet="Sponsors" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Meeting">
+        <EntityType Name="Event">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="EventTypeId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -106,7 +137,16 @@
           <Property Name="CreatedById" Type="Int32" Nullable="false" />
           <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedById" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Sponsors" Relationship="LANUGModel.MeetingSponsors" FromRole="Meetings" ToRole="Sponsors" />
+          <NavigationProperty Name="EventType" Relationship="LANUGModel.FK_Events_EventTypes" FromRole="Events" ToRole="EventTypes" />
+          <NavigationProperty Name="Sponsors" Relationship="LANUGModel.EventSponsors" FromRole="Events" ToRole="Sponsors" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Events" Relationship="LANUGModel.FK_Events_EventTypes" FromRole="EventTypes" ToRole="Events" />
         </EntityType>
         <EntityType Name="Sponsor">
           <Key>
@@ -121,10 +161,22 @@
           <Property Name="CreatedById" Type="Int32" Nullable="false" />
           <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModifiedById" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Meetings" Relationship="LANUGModel.MeetingSponsors" FromRole="Sponsors" ToRole="Meetings" />
+          <NavigationProperty Name="Events" Relationship="LANUGModel.EventSponsors" FromRole="Sponsors" ToRole="Events" />
         </EntityType>
-        <Association Name="MeetingSponsors">
-          <End Role="Meetings" Type="LANUGModel.Meeting" Multiplicity="*" />
+        <Association Name="FK_Events_EventTypes">
+          <End Role="EventTypes" Type="LANUGModel.EventType" Multiplicity="1" />
+          <End Role="Events" Type="LANUGModel.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EventSponsors">
+          <End Role="Events" Type="LANUGModel.Event" Multiplicity="*" />
           <End Role="Sponsors" Type="LANUGModel.Sponsor" Multiplicity="*" />
         </Association>
       </Schema>
@@ -133,10 +185,11 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LANUGModelStoreContainer" CdmEntityContainer="LANUGEntities">
-          <EntitySetMapping Name="Meetings">
-            <EntityTypeMapping TypeName="LANUGModel.Meeting">
-              <MappingFragment StoreEntitySet="Meetings">
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="LANUGModel.Event">
+              <MappingFragment StoreEntitySet="Events">
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
@@ -146,6 +199,14 @@
                 <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
                 <ScalarProperty Name="Modified" ColumnName="Modified" />
                 <ScalarProperty Name="ModifiedById" ColumnName="ModifiedById" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="LANUGModel.EventType">
+              <MappingFragment StoreEntitySet="EventTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -164,9 +225,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="MeetingSponsors" TypeName="LANUGModel.MeetingSponsors" StoreEntitySet="MeetingSponsors">
-            <EndProperty Name="Meetings">
-              <ScalarProperty Name="Id" ColumnName="MeetingId" />
+          <AssociationSetMapping Name="EventSponsors" TypeName="LANUGModel.EventSponsors" StoreEntitySet="EventSponsors">
+            <EndProperty Name="Events">
+              <ScalarProperty Name="Id" ColumnName="EventId" />
             </EndProperty>
             <EndProperty Name="Sponsors">
               <ScalarProperty Name="Id" ColumnName="SponsorId" />
