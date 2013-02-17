@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<LANUG.Models.Event>
+
+@{
     ViewBag.Title = "Calendar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,7 +19,33 @@
                     left: 'prev,next today',
                     center: 'title',
                     right: 'month,basicWeek,basicDay'
-                }
+                },
+                events: [
+                    @{
+                    bool first = true;
+                    foreach (var item in Model)
+                    {
+                        if (first) {first = false;}
+                        else {<text>,</text>}
+                        <text>
+                        {
+                            title : '@item.Name',
+                            start : '@item.StartTime.ToString("yyyy-MM-dd hh:mm:ss tt")',
+                            end : '@item.EndTime.ToString("yyyy-MM-dd hh:mm:ss tt")',
+                            allDay: false,
+                            url: '/Events/@item.Name.Replace(" ", "-").Replace(".", "_")'
+                        }
+                        </text>                        
+                    }
+                    }
+                ],
+                eventClick: function (event) {
+                    if (event.url) {
+                        window.location = event.url;
+                        return false;
+                    }
+                },
+                eventBackgroundColor: '#57654D'
             });
         });
 

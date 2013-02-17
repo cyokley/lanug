@@ -34,7 +34,7 @@ namespace LANUG.Controllers
 
         public ActionResult Calendar()
         {
-            return View();
+            return View(db.Events);
         }
     }
 }
