@@ -53,6 +53,7 @@ namespace LANUG.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.EventTypes = new SelectList(db.EventTypes, "Id", "Type");
             ViewBag.EventSponsors = new SelectList(db.Sponsors, "Id", "Name");
             return View();
         }
@@ -79,6 +80,7 @@ namespace LANUG.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.EventTypes = new SelectList(db.EventTypes, "Id", "Type");
             ViewBag.EventSponsors = new SelectList(db.Sponsors, "Id", "Name");
             //ViewBag.SponsorId = new SelectList(db.Sponsors, "Id", "Name", Event.SponsorId);
             return View(Event);
@@ -94,6 +96,7 @@ namespace LANUG.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.EventTypes = new SelectList(db.EventTypes, "Id", "Type");
             ViewBag.EventSponsors = new SelectList(db.Sponsors, "Id", "Name");
             return View(Event);
         }
@@ -107,24 +110,27 @@ namespace LANUG.Controllers
         {
             if (ModelState.IsValid)
             {
-                var mtg = db.Events.Find(Event.Id);
-                mtg.Name = Event.Name;
-                mtg.StartTime = Event.StartTime;
-                mtg.EndTime = Event.EndTime;
-                mtg.Info = Event.Info;
-                mtg.Summary = Event.Summary;
-                mtg.Sponsors.Clear();
+                var evt = db.Events.Find(Event.Id);
+                evt.EventTypeId = Event.EventTypeId;
+                evt.Name = Event.Name;
+                evt.StartTime = Event.StartTime;
+                evt.EndTime = Event.EndTime;
+                evt.Info = Event.Info;
+                evt.Summary = Event.Summary;
+                evt.Sponsors.Clear();
                 if (SponsorList != null)
                 {
                     foreach (int sponsorId in SponsorList)
                     {
-                        mtg.Sponsors.Add(db.Sponsors.Find(sponsorId));
+                        evt.Sponsors.Add(db.Sponsors.Find(sponsorId));
                     }
                 }
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.EventTypes = new SelectList(db.EventTypes, "Id", "Type");
+            ViewBag.EventSponsors = new SelectList(db.Sponsors, "Id", "Name");
             return View(Event);
         }
 

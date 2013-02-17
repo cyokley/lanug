@@ -11,7 +11,18 @@
 
     <fieldset>
         <legend>Event</legend>
-
+        
+        <div class="editor-label">
+            <label for="EventTypeId">Event Type</label>
+        </div>
+        <div class="editor-field">            
+                <select id="EventTypeId" name="EventTypeId" class="required">
+                @foreach (SelectListItem itm in ViewBag.EventTypes)
+                {
+                    <option value="@itm.Value">@itm.Text</option>
+                }
+                </select>
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>

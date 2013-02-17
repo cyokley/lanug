@@ -9,7 +9,7 @@
             {
                 <h1><a href="Events/@Model.Name">@Model.Name</a></h1>
                 @Html.Raw(Model.Summary)
-                <a class="featured-more" href="Events/@Model.Name">read more...</a>
+                <a class="featured-more" href="Events/@Model.Name.Replace(" ", "-").Replace(".","_")">read more...</a>
             }
         </div>
     </section>

@@ -8,7 +8,7 @@
         {
             foreach (var item in Model)
             {            
-            <li><a href="@Url.Content("~/Events/" + item.Name.Replace(" ", "-"))">@item.Name - @item.StartTime.ToShortDateString()</a></li>
+            <li><a href="@Url.Content("~/Events/" + item.Name.Replace(" ", "-").Replace(".","_"))">@item.Name - @item.StartTime.ToShortDateString()</a></li>
             }
         }
         else

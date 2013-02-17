@@ -16,6 +16,19 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="editor-label">
+            <label for="EventTypeId">Event Type</label>
+        </div>
+        <div class="editor-field">            
+                <select id="EventTypeId" name="EventTypeId" class="required">
+                @foreach (SelectListItem itm in ViewBag.EventTypes)
+                {
+                    if (itm.Value == Model.EventTypeId.ToString())
+                    { <option value="@itm.Value" selected="selected">@itm.Text</option> }
+                    else { <option value="@itm.Value">@itm.Text</option> }
+                }
+                </select>
+        </div>
+        <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>
         <div class="editor-field">
