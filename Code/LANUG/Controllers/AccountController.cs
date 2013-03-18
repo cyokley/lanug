@@ -17,6 +17,8 @@ namespace LANUG.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private LANUGEntities db = new LANUGEntities();
+
         //
         // GET: /Account/Login
 
@@ -25,6 +27,19 @@ namespace LANUG.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
+        }
+
+        [AllowAnonymous]
+        public string CreateFirstUser(string password, string username = "Administrator")
+        {
+            if (db.Database.SqlQuery<int>("SELECT COUNT(UserId) FROM UserProfile", string.Empty).First() == 0)
+            {
+                WebSecurity.CreateUserAndAccount(username, password);
+                Roles.CreateRole("Admin");
+                Roles.AddUserToRole(username, "Admin");
+                return "First user has been setup.";
+            }
+            else return "First user has already been created.";
         }
 
         //
