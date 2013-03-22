@@ -144,3 +144,4 @@ C:\Users\cyokley\Desktop\LANUG\Code\LANUG\bin\DotNetOpenAuth.OpenId.xml
 C:\Users\cyokley\Desktop\LANUG\Code\LANUG\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 C:\Users\cyokley\Desktop\LANUG\Code\LANUG\obj\Debug\LANUG.dll
 C:\Users\cyokley\Desktop\LANUG\Code\LANUG\obj\Debug\LANUG.pdb
+C:\Users\cyokley\Desktop\lanug\Code\LANUG\obj\Debug\LANUG.csprojResolveAssemblyReference.cache
