@@ -46,7 +46,7 @@ namespace LANUG.Controllers
                     MailMessage msg = new MailMessage(Email, ConfigurationManager.AppSettings["ContactEmail"]);
                     msg.Subject = "LANUG Contact Submission: " + Subject;
                     msg.IsBodyHtml = true;
-                    msg.Body = "New Message From " + Name + "<br/><br/>" + Message;
+                    msg.Body = "New Message From " + Name + "; Email: " + Email + "<br/><br/>" + Message;
 
                     SmtpClient smtp = new SmtpClient(ConfigurationManager.AppSettings["SmtpServer"]);
                     smtp.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["SmtpUser"], ConfigurationManager.AppSettings["SmtpPassword"]);
@@ -56,7 +56,7 @@ namespace LANUG.Controllers
             }
             catch (Exception ex)
             {
-                rval = ex.Message;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
             return Json(rval, JsonRequestBehavior.AllowGet);
         }
