@@ -7,26 +7,46 @@
     <h2>@ViewBag.Message</h2>
 </hgroup>
 
-
-<section class="contact">
-    <header>
-        <h3>Email</h3>
-    </header>
-    <a href="mailto:loweraldotnet@live.com">loweraldotnet@live.com</a>
-</section>
-<br />
-<br />
-<section class="contact">
-    <header>
-        <h3>Facebook</h3>
-    </header>
-    <a href="http://www.facebook.com/theLANUG">facebook.com/theLANUG</a>
-</section>
-<br />
-<br />
-<section class="contact">
-    <header>
-        <h3>Google+</h3>
-    </header>
-    <a href="https://plus.google.com/105681478003197232414">gplus.to/LANUG</a>
-</section>
+<div id="SuccessPanel" style="display:none;">
+    Thanks for getting in touch. Your message has been sent and we will get back to you shortly.
+</div>
+<div id="ContactPanel">
+    <p>Feel free to use the form below to contact us. We will get back to you as soon as possible.</p>
+    <form method="post" action="~/Contact" id="info_form">
+        <input type="hidden" id="CV" name="CV" value="@ViewBag.CV" />
+        Your Name<br />
+        <input type="text" id="Name" name="Name" class="required" /><br />
+        Your Email<br />
+        <input type="email" id="Email" name="Email" class="required email" /><br />
+        Subject<br />
+        <input type="text" id="Subject" name="Subject" class="required" /><br />
+        Message<br />
+        <textarea id="Message" name="Message" rows="15" style="width: 70%;" class="required"></textarea><br />
+        Are you human? @ViewBag.Captcha =
+        <input type="text" id="Captcha" name="Captcha" style="width: 30px;" class="required" />
+        <input type="submit" id="Submit" value="Submit" />
+    </form>
+</div>
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#info_form').validate();
+            $('#Submit').click(function () {
+                if ($('#info_form').valid()) {
+                    $.post("Contact", $('#info_form').serialize(), function (data) {
+                        if (data > '') {
+                            alert('An error has occurred: ' + data);
+                        }
+                        else {
+                            $('#ContactPanel').slideUp();
+                            $('#SuccessPanel').slideDown();
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+    </script>
+}
